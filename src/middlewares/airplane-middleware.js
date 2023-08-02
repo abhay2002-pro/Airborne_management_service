@@ -11,6 +11,17 @@ function validateCreateRequest(req, res, next) {
   next();
 }
 
+function validateUpdateRequest(req, res, next) {
+  if (!req.body.modelNumber) {
+    ErrorResponse.message = "Something went wrong while updating airplane";
+    ErrorResponse.error = new AppError(["Capacity not found in the incoming request in the correct form"], StatusCodes.BAD_REQUEST)
+    return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse);
+  }
+  next();
+}
+
 module.exports = {
   validateCreateRequest,
+  validateUpdateRequest
 };
+
