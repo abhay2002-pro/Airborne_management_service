@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  api:
+    image: airborne-management-service:dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: airborne-management-service
+
+    ports:
+      - "3000:3000"
+
+    environment:
+      - PORT=3000
+      - DB_USERNAME=airborne_user
+      - DB_PASSWORD=Xg7oSOJNSMUVRoMsSeKznYw6g26gwyJH
+      - DB_NAME=airborne
+      - DB_HOST=dpg-d64mj94r85hc73bvbfu0-a.singapore-postgres.render.com
+
+    restart: unless-stopped
