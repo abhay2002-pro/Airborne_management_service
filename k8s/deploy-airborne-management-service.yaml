@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airborne-management-deployment
+  labels:
+    app: airborne-management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: airborne-management-svc
+  template:
+    metadata:
+      labels:
+        app: airborne-management-svc
+    spec:
+      containers:
+        - name: airborne-management-svc
+          image: airborne-management-service:dev
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: airborne-management-service-config
+                  key: PORT
+            - name: DB_USERNAME
+              valueFrom:
+                configMapKeyRef: 
+                  name: airborne-management-service-config
+                  key: DB_USERNAME
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: airborne-management-service-config
+                  key: DB_NAME
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: airborne-management-service-config
+                  key: DB_HOST
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: DB_PASSWORD
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: airborne-management-service
+spec:
+  selector:
+    app: airborne-management-svc
+  type: LoadBalancer   
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+      nodePort: 30002
