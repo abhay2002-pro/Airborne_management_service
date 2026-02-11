@@ -15,7 +15,6 @@ services:
     environment:
       - PORT=3000
       - DB_USERNAME=airborne_user
-      - DB_PASSWORD=Xg7oSOJNSMUVRoMsSeKznYw6g26gwyJH
       - DB_NAME=airborne
       - DB_HOST=dpg-d64mj94r85hc73bvbfu0-a.singapore-postgres.render.com
 
