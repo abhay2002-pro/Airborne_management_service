@@ -4,7 +4,8 @@
   "description": "A basic starter boilerplate for Node JS projects",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js"
   },
   "author": "Abhay Ray",
   "license": "ISC",
